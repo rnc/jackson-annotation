@@ -2,7 +2,7 @@
 
 
 
-# Jackson Post Serialization Annotation
+# Jackson Post Deserialization Annotation Hook
 
 ## Overview
 
