@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Copyright (C) 2019 Red Hat, Inc.
+    Copyright (C) 2020 Red Hat, Inc.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -50,9 +50,9 @@
   </developers>
 
   <scm>
-    <connection>scm:git:https://github.com/rnc/jackson-deserialize.git</connection>
-    <developerConnection>scm:git:git@github.com:rnc/jackson-deserialize.git</developerConnection>
-    <url>http://github.com/rnc/jackson-deserialize</url>
+    <connection>scm:git:https://github.com/rnc/jackson-annotation.git</connection>
+    <developerConnection>scm:git:git@github.com:rnc/jackson-annotation.git</developerConnection>
+    <url>http://github.com/rnc/jackson-annotation</url>
     <tag>HEAD</tag>
   </scm>
 
@@ -62,7 +62,7 @@
     <javaVersion>1.8</javaVersion>
     <javaTestVersion>${javaVersion}</javaTestVersion>
 
-    <groovyVersion>2.5.7</groovyVersion>
+    <groovyVersion>2.5.9</groovyVersion>
     <jacksonVersion>2.10.0.pr1</jacksonVersion>
   </properties>
 
@@ -80,22 +80,23 @@
       </dependency>
 
       <dependency>
-        <groupId>org.codehaus.groovy</groupId>
-        <artifactId>groovy-json</artifactId>
-        <version>${groovyVersion}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.codehaus.groovy</groupId>
-        <artifactId>groovy</artifactId>
-        <version>${groovyVersion}</version>
-      </dependency>
-
-      <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-api</artifactId>
         <version>1.7.25</version>
       </dependency>
 
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy-json</artifactId>
+        <version>${groovyVersion}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.groovy</groupId>
+        <artifactId>groovy</artifactId>
+        <version>${groovyVersion}</version>
+        <scope>test</scope>
+      </dependency>
       <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-classic</artifactId>
@@ -128,21 +129,18 @@
     </dependency>
 
     <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy-json</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
 
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy-json</artifactId>
+    </dependency>
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
@@ -155,7 +153,7 @@
       <groupId>com.github.stefanbirkner</groupId>
       <artifactId>system-rules</artifactId>
     </dependency>
-  </dependencies>
+ </dependencies>
 
   <build>
     <pluginManagement>
@@ -165,15 +163,6 @@
           <artifactId>license-maven-plugin</artifactId>
           <configuration>
             <header>APACHE-2-SIMPLIFIED-COPYRIGHT.txt</header>
-          </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-release-plugin</artifactId>
-          <configuration>
-            <mavenExecutorId>forked-path</mavenExecutorId>
-            <useReleaseProfile>false</useReleaseProfile>
-            <arguments>-Prelease,run-its</arguments>
           </configuration>
         </plugin>
       </plugins>

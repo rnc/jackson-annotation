@@ -1,11 +1,11 @@
 package com.redhat.cpaas.pipeline.model.component.build
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.PropertyNamingStrategy
+import com.redhat.cpaas.pipeline.model.component.Component
 
 //@Grapes([
 //    @Grab(group='com.fasterxml.jackson.core', module='jackson-core', version='2.10.1'),
@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategy
 //    @Grab(group='com.fasterxml.jackson.core', module='jackson-databind', version='2.10.1'),
 //])
 
-import com.redhat.cpaas.pipeline.model.component.Component
 import com.redhat.cpaas.pipeline.model.component.build.artifact.BuildArtifact
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")

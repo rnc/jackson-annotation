@@ -25,8 +25,7 @@ import org.goots.jackson.deserializer.JsonPostDeserialize
     @JsonSubTypes.Type(value = MavenComponent.class, name = MavenComponent.TYPE),
     @JsonSubTypes.Type(value = RPMComponent.class, name = RPMComponent.TYPE)
 ])
-//@JsonDeserialize(converter = ComponentConverter.class)
-public abstract class Component implements Serializable {
+abstract class Component implements Serializable {
     static final String TYPE = "generic"
     static final String JENKINSFILE = "product/Jenkinsfile"
 
@@ -63,9 +62,8 @@ public abstract class Component implements Serializable {
     public List<Build> builds
 
     @JsonPostDeserialize
-    public void postDeserialize()
+    private void postDeserialize()
     {
-        System.out.println ("### In postDeserialize");
         builds.forEach( { b -> b.postInit()})
     }
 
@@ -74,15 +72,3 @@ public abstract class Component implements Serializable {
 //        return SchemaUtils.objectToString(this)
 //    }
 }
-
-//public class ComponentConverter extends StdConverter<Component, Component> {
-//
-//    @Override
-//    Component convert(Component c) {
-//        System.out.println ("### In CEKitConverter ")
-//        System.out.println (" ### CEKit converter component " + c.component);
-//        c.builds.forEach({ b -> b.setup() } )
-////       build.setup();
-//        return build
-//    }
-//}

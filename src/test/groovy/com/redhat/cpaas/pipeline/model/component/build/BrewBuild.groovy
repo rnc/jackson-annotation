@@ -6,8 +6,7 @@ import com.redhat.cpaas.pipeline.model.Repository
 import com.redhat.cpaas.pipeline.model.component.ContainerComponent
 import com.redhat.cpaas.pipeline.model.component.build.artifact.ContainerBuildArtifact
 
-//@JsonDeserialize(converter = BrewBuildConverter.class)
-public class BrewBuild extends Build {
+class BrewBuild extends Build {
     public static final String TYPE = "brew"
 
     /**
@@ -32,49 +31,21 @@ public class BrewBuild extends Build {
      */
     public Repository brewSource
 
-//    BrewBuild() {
-//        System.out.println ("### In DEFAULT ctor")
-//    }
-
-
-//    @JsonCreator
-//    public BrewBuild(Map<String,Object> props)
-//    {
-//                System.out.println ("### In ctor")
-//
-//    }
-//    @JsonCreator
-//    BrewBuild(@JsonProperty("brew-package")String brewPackage,
-//              @JsonProperty("brew-target")String brewTarget,
-//              @JsonProperty("brew-flags")String brewFlags,
-//              @JsonProperty("brew-source")Repository brewSource) {
-//        this.brewPackage = brewPackage;
-//        this.brewTarget = brewTarget;
-//        this.brewFlags = brewFlags;
-//        this.brewSource = brewSource;
-//        setup()
-//    }
-
 
     @Override
-    public void postInit()
+    void postInit()
     {
-        System.out.println ("### In setup")
-        System.out.println (" setup package is " + brewPackage + " and target " + brewTarget +
-                " and component " + component + " and brewSource " + brewSource)
+//        System.out.println ("### DEBUG: postInit package is " + brewPackage + " and target " + brewTarget +
+//                " and component " + component + " and brewSource " + brewSource)
 
         // Compute default Brew target name if not provided
         if (!this.brewTarget) {
             this.brewTarget = this.defaultBrewTarget()
         }
-System.out.println (" after brew target with component " + component);
         // Compute Brew pacakge name, if not provided
         if (!this.brewPackage) {
-            System.out.println ("In brew pkg");
             def (String repoType, String repoName) = this.parseDistGitRepo(this.brewSource.repo)
-            System.out.println ("In brew pkg2");
             this.brewPackage = "${repoName}${this.defaultPackageSuffix()}"
-            System.out.println ("In brew pkg fin");
         }
     }
 
@@ -160,7 +131,6 @@ System.out.println (" after brew target with component " + component);
         }
     }
 
-    //@Override
     @JsonSetter("brew-package")
     void setBrewPackage() {
         // // Compute default Brew target name if not provided
@@ -175,23 +145,3 @@ System.out.println (" after brew target with component " + component);
         }
     }
 }
-
-//class BrewBuildConverter extends StdConverter<BrewBuild, BrewBuild> {
-//
-//  @Override
-//  BrewBuild convert(BrewBuild build) {
-//      System.out.println ("### In BrewBuildConverter ")
-//    // Compute default Brew target name if not provided
-//    if (!build.brewTarget) {
-//        build.brewTarget = build.defaultBrewTarget()
-//    }
-//
-//    // Compute Brew pacakge name, if not provided
-//    if (!build.brewPackage) {
-//        def (String repoType, String repoName) = build.parseDistGitRepo(build.brewSource.repo)
-//        build.brewPackage = "${repoName}${build.defaultPackageSuffix()}"
-//    }
-//
-//    return build
-//  }
-//}

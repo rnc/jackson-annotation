@@ -6,7 +6,7 @@
 
 ## Overview
 
-This code provides a simple annotation that may be placed upon a method which will be run upon completion of the deserialization.
+This code provides a simple annotation that may be placed upon a method (even a private method) which will be run upon completion of the deserialization.
 
 This has been inspired by several stackoverflow posts:
 
