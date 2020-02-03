@@ -17,3 +17,21 @@ This has been inspired by several stackoverflow posts:
 and by the following Jackson issues
 * [Issue 279](https://github.com/FasterXML/jackson-databind/issues/279)
 * [Issue 2045](https://github.com/FasterXML/jackson-databind/issues/2045)
+
+## Usage
+
+In order to use this annotation the `ObjectMapper` instance must be correctly configured. For example:
+```
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.registerModule( JacksonPostHookDeserializer.getSimpleModule() );
+```
+
+Then, place the annotation upon a method to run after deserialization e.g.
+
+```
+    @JsonPostDeserialize
+    private void postDeserialize()
+    {
+        myObjects.forEach( { obj -> obj.postInit()})
+    }
+```
