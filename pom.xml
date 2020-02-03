@@ -27,7 +27,7 @@
 
   <groupId>org.goots.jackson</groupId>
   <artifactId>deserializer</artifactId>
-  <version>0.1</version>
+  <version>0.2-SNAPSHOT</version>
 
   <name>JsonPostDeserialize Annotation</name>
   <description>Annotation to denote to denote methods to run post deserialize</description>
@@ -53,7 +53,7 @@
     <connection>scm:git:https://github.com/rnc/jackson-annotation.git</connection>
     <developerConnection>scm:git:git@github.com:rnc/jackson-annotation.git</developerConnection>
     <url>http://github.com/rnc/jackson-annotation</url>
-    <tag>deserializer-0.1</tag>
+    <tag>HEAD</tag>
   </scm>
 
   <properties>
