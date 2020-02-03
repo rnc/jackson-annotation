@@ -15,6 +15,7 @@ This has been inspired by several stackoverflow posts:
 * [How to make @JsonBackReference and a custom deserializer work at the same time?](https://stackoverflow.com/questions/55924605/jackson-how-to-make-jsonbackreference-and-a-custom-deserializer-work-at-the-sa)
 
 and by the following Jackson issues
+
 * [Issue 279](https://github.com/FasterXML/jackson-databind/issues/279)
 * [Issue 2045](https://github.com/FasterXML/jackson-databind/issues/2045)
 

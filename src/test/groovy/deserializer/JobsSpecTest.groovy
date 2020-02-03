@@ -16,7 +16,6 @@
 package deserializer
 
 import com.redhat.cpaas.pipeline.model.component.Component
-import com.redhat.cpaas.pipeline.model.component.build.Build
 import org.junit.Rule
 import org.junit.Test
 import org.junit.contrib.java.lang.system.SystemOutRule
