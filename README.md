@@ -24,7 +24,7 @@ and by the following Jackson issues
 In order to use this annotation the `ObjectMapper` instance must be correctly configured. For example:
 ```
     ObjectMapper mapper = new ObjectMapper();
-    mapper.registerModule( JacksonPostHookDeserializer.getSimpleModule() );
+    mapper.registerModule( org.goots.jackson.deserializer.JacksonPostHookDeserializer.getSimpleModule() );
 ```
 
 Then, place the annotation upon a method to run after deserialization e.g.
