@@ -45,8 +45,8 @@ public class JacksonPostHookDeserializer extends DelegatingDeserializer
      */
     public static Module getSimpleModule()
     {
-        SimpleModule module = new SimpleModule();
-        module.setDeserializerModifier( new BeanDeserializerModifier()
+        logger.info ( "Registering JacksonPostHookDeserializer");
+        return new SimpleModule().setDeserializerModifier( new BeanDeserializerModifier()
         {
             @Override
             public JsonDeserializer<?> modifyDeserializer( DeserializationConfig config,
@@ -66,7 +66,6 @@ public class JacksonPostHookDeserializer extends DelegatingDeserializer
                 }
             }
         } );
-        return module;
     }
 
     private JacksonPostHookDeserializer( JsonDeserializer<?> delegate, BeanDescription beanDescription )
@@ -89,14 +88,19 @@ public class JacksonPostHookDeserializer extends DelegatingDeserializer
         StreamSupport.stream( beanDescription.getClassInfo().memberMethods().spliterator(), true ).forEach( m -> {
             if ( m.hasAnnotation( JsonPostDeserialize.class ) )
             {
-                logger.debug( "Invoking method {} ", m.getName() );
+                logger.debug( "Invoking method {} on {} ", m.getName(), beanDescription.getBeanClass() );
                 try
                 {
-                    m.fixAccess( true );
+                    if ( m.getAnnotation( JsonPostDeserialize.class ).forceAccess() )
+                    {
+                        logger.debug( "Modifying access for {}", m );
+                        m.fixAccess( true );
+                    }
                     m.callOn( deserializedObject );
                 }
                 catch ( Exception e )
                 {
+                    logger.error( "Caught exception calling method", e );
                     throw new RuntimeException( "Failed to call @JsonPostDeserialize annotated method in class " +
                                                                 beanDescription.getClassInfo().getName(), e );
                 }

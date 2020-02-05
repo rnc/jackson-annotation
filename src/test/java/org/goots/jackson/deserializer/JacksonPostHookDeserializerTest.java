@@ -36,7 +36,7 @@ public class JacksonPostHookDeserializerTest
     @Rule
     public final SystemOutRule systemOutRule = new SystemOutRule().enableLog().muteForSuccessfulTests();
 
-    private String jsonPre1 = "{\n" +
+    private final String jsonPre1 = "{\n" +
                                     "  \"type\" : \"container\",\n" +
                                     "  \"owners\" : null,\n" +
                                     "  \"name\" : \"eap-7-cd\",\n" +
@@ -49,11 +49,25 @@ public class JacksonPostHookDeserializerTest
                                     "    \"description\" : null,\n" +
                                     "    \"artifacts\" : [ ],\n" ;
 
-    private String jsonBrewPkg = "    \"brew-package\" : \"jboss-eap-7-eap-cd-openshift-rhel8-container\",\n";
+    private final String jsonMavenPre1 = "{\n" +
+                    "  \"type\" : \"maven\",\n" +
+                    "  \"owners\" : null,\n" +
+                    "  \"name\" : \"eap-7-cd\",\n" +
+                    "  \"builds\" : [ {\n" +
+                    "    \"type\" : \"pnc\",\n" +
+                    "    \"scratch\" : false,\n" +
+                    "    \"force\" : false,\n" +
+                    "    \"timeout\" : 120,\n" +
+                    "    \"name\" : \"rhel8\",\n" +
+                    "    \"description\" : null,\n" +
+                    "    \"artifacts\" : [ ]\n" ;
 
-    private String jsonBrewTarget = "    \"brew-target\" : \"jb-eap-cd-openshift-dev-rhel-8-containers-candidate\",\n";
 
-    private String jsonPost2 = "    \"brew-flags\" : null,\n" +
+    private final String jsonBrewPkg = "    \"brew-package\" : \"jboss-eap-7-eap-cd-openshift-rhel8-container\",\n";
+
+    private final String jsonBrewTarget = "    \"brew-target\" : \"jb-eap-cd-openshift-dev-rhel-8-containers-candidate\",\n";
+
+    private final String jsonPost2 = "    \"brew-flags\" : null,\n" +
                     "    \"brew-source\" : {\n" +
                     "      \"repo\" : \"containers/jboss-eap-7-tech-preview\",\n" +
                     "      \"ref\" : \"jb-eap-cd-openshift-dev-rhel-8\",\n" +
@@ -102,6 +116,7 @@ public class JacksonPostHookDeserializerTest
     public void testDeserialize1() throws Exception
     {
         mapper.registerModule( JacksonPostHookDeserializer.getSimpleModule() );
+
         String json = jsonPre1 + jsonPost2;
         Component c = mapper.readValue( json, Component.class );
 
@@ -130,5 +145,13 @@ public class JacksonPostHookDeserializerTest
         assertEquals( "jb-eap-cd-openshift-dev-rhel-8-containers-candidate", cb.brewTarget );
 
         assertTrue( systemOutRule.getLog().contains( "Invoking method postDeserialize" ) );
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testDeserializePrivateFail() throws Exception
+    {
+        mapper.registerModule( JacksonPostHookDeserializer.getSimpleModule() );
+        String json = jsonMavenPre1 + "  } ]\n }";
+        mapper.readValue( json, Component.class );
     }
 }
