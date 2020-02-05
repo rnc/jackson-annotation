@@ -31,8 +31,17 @@ Then, place the annotation upon a method to run after deserialization e.g.
 
 ```
     @JsonPostDeserialize
-    private void postDeserialize()
+    public void postDeserialize()
     {
         myObjects.forEach( { obj -> obj.postInit()})
     }
 ```
+
+By default the annotation will not call private methods. To force access set the parameter as follows:
+
+```
+    @JsonPostDeserialize(forceAccess=true)
+    private void postDeserialize()
+    {
+        myObjects.forEach( { obj -> obj.postInit()})
+    }

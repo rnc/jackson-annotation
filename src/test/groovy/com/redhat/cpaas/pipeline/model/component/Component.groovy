@@ -61,7 +61,7 @@ abstract class Component implements Serializable {
     @JsonManagedReference
     public List<Build> builds
 
-    @JsonPostDeserialize
+    @JsonPostDeserialize(forceAccess = true)
     private void postDeserialize()
     {
         builds.forEach( { b -> b.postInit()})
